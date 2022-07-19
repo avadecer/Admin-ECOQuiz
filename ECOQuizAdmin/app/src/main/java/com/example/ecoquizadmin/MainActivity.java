@@ -3,6 +3,8 @@ package com.example.ecoquizadmin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText email, pass;
     private Button login;
     private FirebaseAuth firebaseAuth;
+    private Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +59,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void firebaseLogin() {
+
         firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Welcome back, Admin!", Toast.LENGTH_SHORT).show();
+                            openQuestion();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Incorrect Email/Password", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                 });
+    }
+
+    private void openQuestion(){
+        Intent intent = new Intent(this, QuestionActivity.class);
+        startActivity(intent);
     }
     }
