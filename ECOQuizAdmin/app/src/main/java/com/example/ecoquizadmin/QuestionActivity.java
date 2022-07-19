@@ -1,15 +1,26 @@
 package com.example.ecoquizadmin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -17,6 +28,7 @@ public class QuestionActivity extends AppCompatActivity {
     private Button addQB;
     public static List<QuestionModel> quesList = new ArrayList<>();
     private QuestionAdapter adapter;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +49,53 @@ public class QuestionActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         quesView.setLayoutManager(layoutManager);
 
+        firestore = FirebaseFirestore.getInstance();
+
         loadQuestions();
     }
 
     private void loadQuestions(){
         quesList.clear();
 
-        quesList.add(new QuestionModel("1","Q1", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q2", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q3", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q4", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q5", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q6", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q7", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q8", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q9", "A", "B",2));
-        quesList.add(new QuestionModel("1","Q10", "A", "B",2));
+        firestore.collection("QUIZ").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-        adapter = new QuestionAdapter(quesList);
-        quesView.setAdapter(adapter);
+                Map<String, QueryDocumentSnapshot> docList = new ArrayMap<>();
+
+                for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                    docList.put(doc.getId(), doc);
+                }
+
+                QueryDocumentSnapshot quesListDoc = docList.get("QUESTION_LIST");
+
+                String count = quesListDoc.getString("COUNT");
+
+                for(int i=0; i < Integer.valueOf(count); i++){
+                    String quesID = quesListDoc.getString("Q" + String.valueOf(i+1) + "_ID");
+
+                    QueryDocumentSnapshot quesDoc = docList.get(quesID);
+
+                    quesList.add(new QuestionModel(
+                            quesID,
+                            quesDoc.getString("QUESTION"),
+                            quesDoc.getString("A"),
+                            quesDoc.getString("B"),
+                            Integer.valueOf(quesDoc.getString("ANSWER"))
+                    ));
+                }
+
+                adapter = new QuestionAdapter(quesList);
+                quesView.setAdapter(adapter);
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(QuestionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

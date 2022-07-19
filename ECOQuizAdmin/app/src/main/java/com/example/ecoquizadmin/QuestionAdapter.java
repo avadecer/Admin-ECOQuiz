@@ -51,7 +51,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         private void setData(int pos){
-            title.setText("              QUESTION " + pos);
+            title.setText("              QUESTION " + String.valueOf(pos+1));
         }
     }
 }
