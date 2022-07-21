@@ -24,6 +24,8 @@ public class QuestionDetailsActivity extends AppCompatActivity {
     private Button addQB;
     private String qStr, aStr, bStr, ansStr;
     private FirebaseFirestore firestore;
+    private String action;
+    private int qID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,21 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         addQB = findViewById(R.id.addQB);
 
         firestore = FirebaseFirestore.getInstance();
+
+        action = getIntent().getStringExtra("ACTION");
+
+        if(action.compareTo("EDIT") == 0)
+        {
+            qID = getIntent().getIntExtra("Q_ID", 0);
+            loadData(qID);
+            getSupportActionBar().setTitle("Question " + String.valueOf(qID));
+            addQB.setText("UPDATE");
+        }
+        else
+        {
+            getSupportActionBar().setTitle("Question " + String.valueOf(quesList.size() + 1));
+            addQB.setText("ADD");
+        }
 
         addQB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +83,14 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                     answer.setError("Enter correct answer");
                     return;
                 }
-
-                    addNewQuestion();
+                    if(action.compareTo("EDIT") == 0)
+                    {
+                        editQuestion();
+                    }
+                    else
+                    {
+                        addNewQuestion();
+                    }
 
             }
         });
@@ -122,5 +145,47 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                                         Toast.makeText(QuestionDetailsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                                     }
                                 });
+    }
+
+    private void loadData(int id)
+    {
+        ques.setText(quesList.get(id).getQuestion());
+        optionA.setText(quesList.get(id).getOptionA());
+        optionB.setText(quesList.get(id).getOptionB());
+        answer.setText(String.valueOf(quesList.get(id).getCorrectAns()));
+    }
+
+    private void editQuestion()
+    {
+        Map<String,Object> quesData = new ArrayMap<>();
+        quesData.put("QUESTION", qStr);
+        quesData.put("A",aStr);
+        quesData.put("B",bStr);
+        quesData.put("ANSWER",ansStr);
+
+
+        firestore.collection("1").document(quesList.get(qID).getQuesID())
+                .set(quesData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Toast.makeText(QuestionDetailsActivity.this,"Question updated successfully",Toast.LENGTH_SHORT).show();
+
+                        quesList.get(qID).setQuestion(qStr);
+                        quesList.get(qID).setOptionA(aStr);
+                        quesList.get(qID).setOptionB(bStr);
+                        quesList.get(qID).setCorrectAns(Integer.valueOf(ansStr));
+
+                        QuestionDetailsActivity.this.finish();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(QuestionDetailsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
