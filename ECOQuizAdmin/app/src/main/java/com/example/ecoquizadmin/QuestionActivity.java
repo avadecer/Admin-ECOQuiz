@@ -57,7 +57,9 @@ public class QuestionActivity extends AppCompatActivity {
     private void loadQuestions(){
         quesList.clear();
 
-        firestore.collection("QUIZ").get()
+        //fetching questions in the firebase
+
+        firestore.collection("1").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
