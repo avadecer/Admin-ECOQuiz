@@ -26,25 +26,26 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 import java.util.Map;
 
-public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
+public class QuestionAdapter2 extends RecyclerView.Adapter<QuestionAdapter2.ViewHolder2> {
 
     private List<QuestionModel> ques_list;
 
-    public QuestionAdapter(List<QuestionModel> ques_list) {
+    public QuestionAdapter2(List<QuestionModel> ques_list) {
         this.ques_list = ques_list;
     }
 
     @NonNull
     @Override
-    public QuestionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public QuestionAdapter2.ViewHolder2 onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cat_item_layout, viewGroup,false);
-        return new ViewHolder(view);
+        return new ViewHolder2(view);
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder viewHolder, int pos) {
-        viewHolder.setData(pos, this);
+    public void onBindViewHolder(@NonNull QuestionAdapter2.ViewHolder2 viewHolder, int pos) {
+        viewHolder.setData2(pos, this);
     }
 
     @Override
@@ -52,12 +53,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         return ques_list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder2 extends RecyclerView.ViewHolder {
 
         private TextView title;
         private ImageView deleteB;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder2(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.catName);
@@ -65,13 +66,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
         }
 
-        public void setData(final int pos, QuestionAdapter adapter) {
-            title.setText("              QUESTION " + String.valueOf(pos + 1));
+        public void setData2(final int pos, QuestionAdapter2 adapter)
+        {
+            title.setText("              QUESTION " + String.valueOf(pos+1));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(itemView.getContext(), QuestionDetailsActivity.class);
+                    Intent intent = new Intent(itemView.getContext(), QuestionDetailsActivity2.class);
                     intent.putExtra("ACTION", "EDIT");
                     intent.putExtra("Q_ID", pos);
                     itemView.getContext().startActivity(intent);
@@ -89,7 +91,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                                    deleteQuestion(pos, itemView.getContext(), adapter);
+                                    deleteQuestion2(pos, itemView.getContext(), adapter);
                                 }
                             })
                             .setNegativeButton("Cancel", null)
@@ -99,18 +101,18 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                     dialog.getButton(dialog.BUTTON_POSITIVE).setBackgroundColor(Color.YELLOW);
                     dialog.getButton(dialog.BUTTON_NEGATIVE).setBackgroundColor(Color.YELLOW);
 
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 0, 50, 0);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 0 , 50, 0);
                     dialog.getButton(dialog.BUTTON_NEGATIVE).setLayoutParams(params);
                 }
             });
         }
 
-        private void deleteQuestion(int pos, Context context, QuestionAdapter adapter) {
+        private void deleteQuestion2(int pos, Context context, QuestionAdapter2 adapter) {
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
 
-            firestore.collection("1").document(quesList.get(pos).getQuesID())
+            firestore.collection("2").document(quesList.get(pos).getQuesID())
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -127,7 +129,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
                             quesDoc.put("COUNT", String.valueOf(index - 1));
 
-                            firestore.collection("1").document("QUESTIONS_LIST")
+                            firestore.collection("2").document("QUESTIONS_LIST")
                                     .set(quesDoc)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -157,4 +159,4 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                     });
         }
     }
-    }
+}

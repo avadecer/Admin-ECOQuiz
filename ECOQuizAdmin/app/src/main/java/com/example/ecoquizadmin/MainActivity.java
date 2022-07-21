@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText email, pass;
     private Button login;
     private FirebaseAuth firebaseAuth;
-    private Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(MainActivity.this, "Welcome back, Admin!", Toast.LENGTH_SHORT).show();
-                            openQuestion();
+                            open2ndPage();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity.this, "Incorrect Email/Password", Toast.LENGTH_SHORT).show();
@@ -77,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void openQuestion(){
-        Intent intent = new Intent(this, QuestionActivity.class);
+    private void open2ndPage(){
+        Intent intent = new Intent(this, AgePage.class);
         startActivity(intent);
     }
     }
