@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.view.View;
@@ -41,7 +42,8 @@ public class QuestionActivity extends AppCompatActivity {
         addQB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(QuestionActivity.this, QuestionDetailsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -54,50 +56,59 @@ public class QuestionActivity extends AppCompatActivity {
         loadQuestions();
     }
 
-    private void loadQuestions(){
+    private void loadQuestions() {
         quesList.clear();
 
         //fetching questions in the firebase
 
         firestore.collection("1").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                Map<String, QueryDocumentSnapshot> docList = new ArrayMap<>();
+                        Map<String, QueryDocumentSnapshot> docList = new ArrayMap<>();
 
-                for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
-                    docList.put(doc.getId(), doc);
-                }
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            docList.put(doc.getId(), doc);
+                        }
 
-                QueryDocumentSnapshot quesListDoc = docList.get("QUESTION_LIST");
+                        QueryDocumentSnapshot quesListDoc = docList.get("QUESTIONS_LIST");
 
-                String count = quesListDoc.getString("COUNT");
+                        String count = quesListDoc.getString("COUNT");
 
-                for(int i=0; i < Integer.valueOf(count); i++){
-                    String quesID = quesListDoc.getString("Q" + String.valueOf(i+1) + "_ID");
+                        for (int i = 0; i < Integer.valueOf(count); i++) {
+                            String quesID = quesListDoc.getString("Q" + String.valueOf(i + 1) + "_ID");
 
-                    QueryDocumentSnapshot quesDoc = docList.get(quesID);
+                            QueryDocumentSnapshot quesDoc = docList.get(quesID);
 
-                    quesList.add(new QuestionModel(
-                            quesID,
-                            quesDoc.getString("QUESTION"),
-                            quesDoc.getString("A"),
-                            quesDoc.getString("B"),
-                            Integer.valueOf(quesDoc.getString("ANSWER"))
-                    ));
-                }
+                            quesList.add(new QuestionModel(
+                                    quesID,
+                                    quesDoc.getString("QUESTION"),
+                                    quesDoc.getString("A"),
+                                    quesDoc.getString("B"),
+                                    Integer.valueOf(quesDoc.getString("ANSWER"))
+                            ));
+                        }
 
-                adapter = new QuestionAdapter(quesList);
-                quesView.setAdapter(adapter);
+                        adapter = new QuestionAdapter(quesList);
+                        quesView.setAdapter(adapter);
 
-            }
-        })
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(QuestionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }
