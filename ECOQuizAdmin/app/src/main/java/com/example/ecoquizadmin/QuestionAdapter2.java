@@ -1,6 +1,7 @@
 package com.example.ecoquizadmin;
 
 import static com.example.ecoquizadmin.QuestionActivity.quesList;
+import static com.example.ecoquizadmin.QuestionActivity2.quesList2;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -112,7 +113,7 @@ public class QuestionAdapter2 extends RecyclerView.Adapter<QuestionAdapter2.View
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
 
-            firestore.collection("2").document(quesList.get(pos).getQuesID())
+            firestore.collection("2").document(quesList2.get(pos).getQuesID())
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -120,9 +121,9 @@ public class QuestionAdapter2 extends RecyclerView.Adapter<QuestionAdapter2.View
 
                             Map<String, Object> quesDoc = new ArrayMap<>();
                             int index = 1;
-                            for (int i = 0; i < quesList.size(); i++) {
+                            for (int i = 0; i < quesList2.size(); i++) {
                                 if (i != pos) {
-                                    quesDoc.put("Q" + String.valueOf(index) + "_ID", quesList.get(i).getQuesID());
+                                    quesDoc.put("Q" + String.valueOf(index) + "_ID", quesList2.get(i).getQuesID());
                                     index++;
                                 }
                             }
@@ -136,7 +137,7 @@ public class QuestionAdapter2 extends RecyclerView.Adapter<QuestionAdapter2.View
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(context, "Question Deleted Successfully", Toast.LENGTH_SHORT).show();
 
-                                            quesList.remove(pos);
+                                            quesList2.remove(pos);
                                             adapter.notifyDataSetChanged();
 
                                         }
