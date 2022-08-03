@@ -12,6 +12,13 @@
     <color name="ecotorc">#50C5B7</color>
     <color name="ecogreen">#9CEC5B</color>
     <color name="ecoyellow">#F0F465</color>
+    <color name="htpred">#D82148</color>
+    <color name="htpbeige">#DADBBD</color>
+    <color name="htpgreen">#6EBF8B</color>
+    <color name="htpdarkblue">#151D3B</color>
+    <color name="hpgrey">#54757A</color>
+    <color name="hpviolet">#572437</color>
+    <color name="hporange">#DA5C41</color>
 
 
 </resources>

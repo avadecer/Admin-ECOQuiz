@@ -6,7 +6,7 @@
     android:layout_height="70dp"
     android:layout_marginBottom="16dp"
     android:background="@drawable/round_corner"
-    android:backgroundTint="@color/ecotorc">
+    android:backgroundTint="@color/htpgreen">
 
     <TextView
         android:id="@+id/catName"
@@ -17,7 +17,7 @@
         android:layout_marginEnd="290dp"
         android:layout_marginBottom="32dp"
         android:text="TextView"
-        android:textColor="@color/ecogrape"
+        android:textColor="@color/htpbeige"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

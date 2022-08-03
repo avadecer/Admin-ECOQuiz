@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuestionActivity"
-    android:background="@color/ecoblue">
+    android:background="@color/htpdarkblue">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quest_recycler"
@@ -29,9 +29,9 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/ecoyellow"
+        android:backgroundTint="@color/htpred"
         android:text="ADD NEW QUESTION"
-        android:textColor="@color/ecogrape"
+        android:textColor="@color/htpbeige"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

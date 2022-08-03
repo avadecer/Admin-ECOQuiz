@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AgePage"
-    android:background="@color/ecoblue">
+    android:background="@color/htpdarkblue">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/b12_Btn"
@@ -17,9 +17,9 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/round_corner"
-        android:backgroundTint="@color/ecotorc"
+        android:backgroundTint="@color/htpred"
         android:text="12 and below"
-        android:textColor="@color/ecoyellow"
+        android:textColor="@color/htpbeige"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,9 +39,9 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/round_corner"
-        android:backgroundTint="@color/ecotorc"
+        android:backgroundTint="@color/htpred"
         android:text="13 and above"
-        android:textColor="@color/ecoyellow"
+        android:textColor="@color/htpbeige"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

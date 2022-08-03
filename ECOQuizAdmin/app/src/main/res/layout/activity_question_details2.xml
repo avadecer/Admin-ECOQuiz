@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuestionDetailsActivity2"
-    android:background="@color/ecoblue">
+    android:background="@color/htpdarkblue">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addQB2"
@@ -15,9 +15,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:padding="15dp"
-        android:backgroundTint="@color/ecoyellow"
+        android:backgroundTint="@color/htpred"
         android:text="ADD"
-        android:textColor="@color/ecogrape"
+        android:textColor="@color/htpbeige"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,55 +45,59 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_marginBottom="50dp"
-            android:backgroundTint="@color/ecoyellow"
-            android:textColor="@color/ecogrape"
+            android:backgroundTint="@color/htpgreen"
+            android:textColor="@color/htpbeige"
             android:textCursorDrawable="@null"
             android:inputType="textMultiLine"
             android:maxLines="5"
             android:lines="3"
-            android:hint="Question" />
+            android:hint="Question"
+            android:textColorHint="@color/htpbeige"/>
 
         <EditText
             android:id="@+id/optionA2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:backgroundTint="@color/ecoyellow"
-            android:textColor="@color/ecogrape"
+            android:backgroundTint="@color/htpgreen"
+            android:textColor="@color/htpbeige"
             android:textCursorDrawable="@null"
             android:maxLines="3"
             android:lines="2"
             android:layout_marginBottom="20dp"
             android:inputType="textMultiLine"
-            android:hint="Option A" />
+            android:hint="Option A"
+            android:textColorHint="@color/htpbeige"/>
 
         <EditText
             android:id="@+id/optionB2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:backgroundTint="@color/ecoyellow"
-            android:textColor="@color/ecogrape"
+            android:backgroundTint="@color/htpgreen"
+            android:textColor="@color/htpbeige"
             android:textCursorDrawable="@null"
             android:maxLines="3"
             android:lines="2"
             android:layout_marginBottom="20dp"
             android:inputType="textMultiLine"
-            android:hint="Option B" />
+            android:hint="Option B"
+            android:textColorHint="@color/htpbeige"/>
 
         <EditText
             android:id="@+id/answer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:backgroundTint="@color/ecoyellow"
-            android:textColor="@color/ecogrape"
+            android:backgroundTint="@color/htpgreen"
+            android:textColor="@color/htpbeige"
             android:textCursorDrawable="@null"
             android:maxLines="3"
             android:lines="2"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:inputType="textMultiLine"
-            android:hint="Answer" />
+            android:hint="Answer"
+            android:textColorHint="@color/htpbeige"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
